@@ -1,0 +1,756 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  background: rgba(0,0,0,0.01);
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+  background: rgba(0,0,0,0.01);
+    --primary: 194 70% 20%;
+    --primary-foreground: 210 40% 98%;
+  box-shadow: none; 
+  border: 1px solid rgba(0,0,0,0.01);
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 38 90% 60%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+  background: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    --ring: 194 70% 20%;
+    --radius: 0rem;
+  background: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  background: rgba(0,0,0,0.035);
+  border: 1px solid rgba(0,0,0,0.035);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 194 70% 25%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 38 90% 65%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 38 90% 65%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  /* reset box-sizing instead of applying a nonexistent Tailwind utility */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Email button glow and translucent label */
+.email-btn { display: inline-flex; align-items: center; gap: .75rem; }
+.email-btn .label {
+  background: rgba(0,0,0,0.35);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+  transition: box-shadow 200ms ease, transform 150ms ease, background-color 150ms ease;
+}
+.email-btn:hover .label {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
+  background: rgba(0,0,0,0.45);
+}
+
+/* Make all website text visually bolder for readability */
+/* Applies a strong weight to all text nodes; use with caution. */
+html body, html body * {
+  font-weight: 700 !important;
+}
+
+
+/* Diagonal sections */
+.diagonal-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.diagonal-top-right {
+  clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 100%);
+}
+
+.diagonal-bottom-left {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 92%);
+}
+
+.diagonal-both {
+  clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+}
+
+/* Hero overlay */
+.hero-overlay {
+  position: relative;
+}
+
+/* Ensure a dark fallback background so the page doesn't flash white while video loads */
+.hero-overlay {
+  background-color: #0f2937;
+}
+.hero-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* start transparent at the very top so the fixed header doesn't show the overlay color underneath */
+  background: linear-gradient(to bottom, rgba(20, 60, 80, 0.0) 0%, rgba(20, 60, 80, 0.4) 20%, rgba(20, 60, 80, 0.7) 100%);
+  z-index: 1;
+}
+
+.hero-overlay > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Video inside hero should sit behind the overlay and content */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0 !important;
+  pointer-events: none;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  object-fit: cover;
+}
+
+/* Fade-in when video is ready to avoid a white flash during load */
+.hero-video {
+  background-color: #0f2937; /* dark fallback while loading */
+  opacity: 0;
+  transition: opacity 320ms ease-in;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+.hero-video.loaded {
+  opacity: 1;
+}
+
+/* Large, obvious play button for deferred video loads */
+.hero-play-overlay-button {
+  padding: 12px 18px;
+  font-weight: 600;
+  background: rgba(10,20,30,0.6);
+  border-radius: 999px;
+}
+
+/* Make sure hero and header respect safe-area insets on iOS so media fills under the notch */
+.hero-overlay {
+  padding-top: env(safe-area-inset-top);
+}
+
+.site-header {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Fallbacks for older browsers */
+@supports not (height: 100dvh) {
+  .hero-video {
+    height: 100vh;
+    min-height: 100vh;
+  }
+}
+
+/* Hero background: static (zoom animation removed) */
+.hero-zoom {
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  will-change: auto;
+}
+
+/* Slideshow zoom for service images */
+.slideshow-zoom {
+  transform-origin: center center;
+  animation: slideshowZoom 8s ease-in-out infinite alternate;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@keyframes slideshowZoom {
+  from { transform: scale(1); }
+  to { transform: scale(2.3); }
+}
+
+/* Specific transitions for service slideshow images */
+.service-slide {
+  will-change: opacity, transform, filter;
+  transition: opacity 2000ms ease-in-out, filter 1000ms ease-in-out, transform 8000ms ease-in-out;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+/* When hidden, apply blur so transitions look smoother */
+.service-slide.opacity-0 {
+  filter: blur(6px) saturate(0.95);
+  transform: scale(1); /* ensure hidden slides don't drift */
+}
+
+.service-slide.opacity-100 {
+  filter: blur(0) saturate(1);
+}
+
+/* Diamond shape */
+.diamond {
+  width: 120px;
+  height: 120px;
+  transform: rotate(45deg);
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  margin: 0 auto;
+}
+
+.diamond-inner {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-45deg) scale(1.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 60, 80, 0.9);
+}
+
+/* Decorative lines */
+.decorative-line {
+  position: relative;
+  display: inline-block;
+  padding: 0 60px;
+}
+
+.decorative-line::before,
+.decorative-line::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  height: 1px;
+  background: currentColor;
+}
+
+.decorative-line::before {
+  left: 0;
+}
+
+.decorative-line::after {
+  right: 0;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* RTL support */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+/* Image overlays */
+.image-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(20, 60, 80, 0.8), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-overlay:hover::after {
+  opacity: 1;
+}
+
+/* Stats boxes */
+.stat-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid #e5e5e5;
+}
+
+
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Ensure header has no border or shadow on small screens */
+@media (max-width: 767px) {
+  .site-header {
+    box-shadow: none !important;
+    border-bottom: none !important;
+    background: transparent !important;
+  }
+}
+
+/* Custom button */
+.btn-primary {
+  background: white;
+  color: hsl(var(--primary));
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  border: 2px solid white;
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: white;
+}
+
+.btn-secondary {
+  background: hsl(var(--primary));
+  color: white;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  border: 2px solid hsl(var(--primary));
+}
+
+/* Constrain project card images to their containers */
+.project-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+/* === Cinematic Hero & Particles === */
+@keyframes heroTextFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-title-fade {
+  opacity: 0;
+  animation: heroTextFade 1.5s ease forwards;
+}
+
+.btn-glow {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(closest-side, rgba(200,169,106,0.18), transparent 50%);
+  opacity: 0.9;
+  filter: blur(12px);
+  transform: scale(0.9);
+  transition: transform 1.6s ease-in-out, opacity 1.6s ease-in-out;
+  pointer-events: none;
+}
+.btn-glow.pulse::before {
+  transform: scale(1.02);
+  opacity: 1;
+}
+
+.hero-particles {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(rgba(255,240,200,0.04) 1px, transparent 1px);
+  background-position: 10% 20%, 70% 80%;
+  background-size: 6px 6px, 8px 8px;
+  opacity: 0.65;
+  animation: particlesFloat 12s linear infinite;
+}
+@keyframes particlesFloat {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-12px) translateX(6px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* === Wave divider between sections === */
+.wave-divider {
+  display: block;
+  line-height: 0;
+  transform: translateY(1px);
+}
+.wave-svg { display:block; width:100%; height:84px; }
+.wave-animate { transition: transform 0.9s ease; }
+
+/* background transitions between sections */
+.bg-transition {
+  transition: background-color 0.8s ease-in-out;
+}
+
+/* === Service cards hover (soft lift luxury) === */
+.service-card {
+  position: relative;
+  /* darker translucent layer so white text is legible */
+  background: rgba(6,12,18,0.56);
+  color: white;
+  backdrop-filter: blur(6px) saturate(0.9);
+  -webkit-backdrop-filter: blur(6px) saturate(0.9);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: transform 350ms cubic-bezier(.22,1,.36,1), box-shadow 350ms ease, border-color 350ms ease;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 60px rgba(10,20,30,0.18);
+  border-color: rgba(255,255,255,0.12);
+}
+.service-card .icon { transition: transform 900ms cubic-bezier(.2,.9,.3,1); }
+.service-card:hover .icon { transform: rotate(4deg); }
+
+/* gold border glow */
+.service-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  box-shadow: 0 0 0 0 rgba(200,169,106,0);
+  transition: box-shadow 450ms ease;
+  pointer-events: none;
+}
+.service-card:hover::after { box-shadow: 0 8px 40px rgba(200,169,106,0.08); }
+
+/* === Scroll reveal tuning (calmer) === */
+@keyframes calmReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; transform: translateY(20px); }
+.reveal.in-view { animation: calmReveal 0.95s cubic-bezier(.22,1,.36,1) forwards; }
+
+/* === Project image hover overlay (luxury zoom) === */
+.project-card { position: relative; overflow: hidden; }
+.project-card .overlay {
+  position: absolute; inset: 0; display:flex; align-items:flex-end; justify-content:center; padding:1.25rem; gap:12px; background:linear-gradient(180deg, rgba(10,20,30,0) 30%, rgba(5,12,20,0.64) 100%); opacity:0; transform: translateY(8px); transition: opacity 550ms ease, transform 550ms ease;
+}
+.project-card:hover .overlay { opacity:1; transform: translateY(0); }
+.project-card img { transition: transform 750ms cubic-bezier(.16,.84,.24,1); }
+.project-card:hover img { transform: scale(1.05); }
+
+/* === Loader animation === */
+.site-loader {
+  position: fixed; inset:0; background:#071226; display:flex; align-items:center; justify-content:center; z-index:9999; transition: opacity 600ms ease, visibility 600ms ease;}
+.site-loader.hidden { opacity:0; visibility:hidden; pointer-events:none; }
+.loader-wave { width:60%; max-width:520px; height:6px; background:linear-gradient(90deg, rgba(200,169,106,0.9), rgba(255,255,255,0.2), rgba(200,169,106,0.9)); background-size:200% 100%; animation: loaderWave 1.6s linear infinite; border-radius:999px; }
+@keyframes loaderWave { from { background-position:0% } to { background-position:200% } }
+
+/* === Page navigation transition === */
+.page-fade-out { opacity: 0; filter: blur(2px); transition: opacity 300ms ease, filter 300ms ease; }
+.page-fade-in { opacity: 1; filter: none; transition: opacity 500ms ease, filter 500ms ease; }
+
+/* === Button ripple (delegated) === */
+.ripple { position: relative; overflow: hidden; }
+.ripple .ripple-effect {
+  position: absolute; border-radius: 50%; transform: scale(0); background: rgba(255,255,255,0.18); animation: ripple 700ms ease-out; pointer-events:none;
+}
+@keyframes ripple { to { transform: scale(4); opacity:0; } }
+
+/* === CTA slow gradient === */
+.cta-gradient { background: linear-gradient(90deg, rgba(42,166,216,1), rgba(20,126,154,1)); background-size: 200% 100%; animation: ctaShift 8s linear infinite; }
+@keyframes ctaShift { 0%{background-position:0%}50%{background-position:100%}100%{background-position:0%} }
+
+/* underline gold on hover */
+.underline-animate { position: relative; }
+.underline-animate::after { content:''; position: absolute; left:0; bottom:-6px; height:3px; width:0; background: linear-gradient(90deg,#c8a96a,#ffeec9); transition: width 520ms cubic-bezier(.22,1,.36,1); }
+.underline-animate:hover::after { width: 60%; }
+
+
+.btn-secondary:hover {
+  background: transparent;
+  color: hsl(var(--primary));
+}
+
+/* Reduce CTA/button footprint on small screens */
+@media (max-width: 640px) {
+  .btn-primary, .btn-secondary {
+    padding: 0.5rem 1rem; /* smaller touch targets */
+    font-size: 0.875rem;
+    letter-spacing: 0.03em;
+    border-width: 1px;
+  }
+
+  /* Target hero CTA pair specifically to keep them compact and aligned */
+  .hero-buttons {
+    gap: 0.75rem;
+  }
+  .hero-buttons .btn-primary, .hero-buttons .btn-secondary {
+    min-width: 130px;
+    max-width: 46%;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+}
+
+/* === Gallery styles (main image + thumbnail strip) === */
+.gallery {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+  .gallery-inner {
+  position: relative;
+  width: 100%;
+  /* increase preview area so whole media can be visible */
+  height: 70vh;
+  min-height: 560px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery__item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery__selector { display: none; }
+.gallery__img {
+  /* allow the full image/video to fit inside the preview without cropping */
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 78vh;
+  object-fit: contain;
+  display: block;
+  opacity: 0;
+  transition: opacity 360ms ease, transform 8s ease;
+}
+.gallery__item input[type="radio"]:checked ~ .gallery__img {
+  opacity: 1;
+  position: relative;
+  z-index: 2;
+}
+
+/* make thumbnail strip horizontally scrollable */
+.gallery-thumbs {
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  padding: 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.gallery__thumb {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+}
+.gallery__thumb img,
+.gallery__thumb video,
+.gallery__thumb .gallery__thumb-video {
+  width: 110px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 10px 24px rgba(10,20,30,0.08);
+  border: 1px solid rgba(10,20,30,0.04);
+  margin: 0;
+}
+.gallery__thumb { transition: transform 240ms ease; display:inline-block; padding:0; }
+.gallery__thumb:active { transform: scale(0.98); }
+
+/* Gallery nav buttons */
+.gallery-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-size: 28px;
+  line-height: 1;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+}
+
+.gallery__item .gallery__img { transition: opacity 360ms ease; }
+
+/* blurred background behind the active media (fills the gaps when using contain) */
+.gallery__bg,
+.gallery__bg-video {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  filter: blur(18px) saturate(0.9);
+  transform: scale(1.06);
+  transition: opacity 360ms ease, transform 800ms ease;
+  opacity: 0;
+  z-index: 0;
+}
+
+.gallery__bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* show background + main media only when the item is selected */
+.gallery__item input[type="radio"]:checked ~ .gallery__bg,
+.gallery__item input[type="radio"]:checked ~ .gallery__bg-video {
+  opacity: 1;
+}
+
+/* Colored tint overlay shown when filtering images/videos */
+.media-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 1;
+  transition: background-color 180ms ease, opacity 180ms ease;
+  background-color: transparent; /* don't obscure media by default */
+}
+
+/* unified tint strength for any active filter (specific or "all") */
+.media-overlay.active {
+  background-color: rgba(200,169,106,0.08);
+}
+
+/* make the global "All" filter weaker so media remains readable */
+.media-overlay.all-active {
+  background-color: rgba(200,169,106,0.02);
+}
+
+
+/* Slight tint on thumbnails when filtered */
+.gallery__thumb { transition: transform 180ms ease; display:inline-block; padding:0; position:relative; }
+.gallery__thumb:active { transform: scale(0.98); }
+.gallery__thumb.filtered::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  pointer-events: none;
+  background: transparent; /* show tint only when active */
+  opacity: 1;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+.gallery__thumb.filtered { box-shadow: none; border: 1px solid rgba(0,0,0,0.02); }
+.gallery__thumb.filtered.active::after { background: rgba(200,169,106,0.08); box-shadow: 0 6px 18px rgba(0,0,0,0.04); border: 1px solid rgba(200,169,106,0.08); }
+.gallery__thumb.filtered.active.all-active::after { background: rgba(200,169,106,0.02); border: 1px solid rgba(200,169,106,0.02); box-shadow: 0 6px 18px rgba(0,0,0,0.01); }
+
+/* Filter bar above gallery (yellowish) */
+.gallery-filter-bar {
+  display: inline-flex;
+  gap: 0.5rem;
+  background: rgba(200,169,106,0.10);
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1rem auto;
+  box-shadow: 0 6px 18px rgba(200,169,106,0.06);
+}
+.gallery-filter-bar button {
+  border-radius: 999px;
+}
+
+.gallery__item input[type="radio"]:checked ~ .gallery__img {
+  opacity: 1;
+  position: relative;
+  z-index: 2;
+}
+
+
+
+/* Mobile: shift hero video/image slightly to the right so right-side details are visible */
+@media (max-width: 640px) {
+  .hero-video {
+    /* shift the video left on small screens so right-side details aren't centered */
+    object-position: 30% center;
+    /* keep cover behavior but bias the visible area to the right */
+  }
+}
+
+

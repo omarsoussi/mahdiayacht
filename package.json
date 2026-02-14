@@ -1,0 +1,28 @@
+{
+  "name": "mahdiayacht",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+    ,
+    "make:mobile-video": "ffmpeg -y -i src/assets/view.mp4 -vf \"scale='min(640,iw)':'min(360,ih)':force_original_aspect_ratio=decrease\" -c:v libx264 -profile:v baseline -level 3.0 -preset veryfast -crf 28 -b:v 500k -movflags +faststart -pix_fmt yuv420p -an src/assets/view-mobile.mp4"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.278.0",
+    "@radix-ui/react-slot": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.0.0"
+  }
+}
